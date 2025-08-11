@@ -19,10 +19,31 @@ var map = new atlas.Map('myMap', {
 });
 
 map.events.add('ready', function () {
+
+    // ====== 1️⃣ DRAW CAMPUS STRUCTURE (Polygon for building) ======
+    var buildingSource = new atlas.source.DataSource();
+    map.sources.add(buildingSource);
+
+    // Example polygon for Library
+    buildingSource.add(new atlas.data.Polygon([[
+        [77.5945, 12.9717],
+        [77.5947, 12.9717],
+        [77.5947, 12.9715],
+        [77.5945, 12.9715],
+        [77.5945, 12.9717]
+    ]]));
+
+    var buildingLayer = new atlas.layer.PolygonLayer(buildingSource, null, {
+        fillColor: 'rgba(0, 128, 255, 0.5)', // Semi-transparent blue
+        strokeColor: '#0044cc',
+        strokeWidth: 2
+    });
+    map.layers.add(buildingLayer);
+
+    // ====== 2️⃣ ADD LOCATION MARKERS ======
     var datasource = new atlas.source.DataSource();
     map.sources.add(datasource);
 
-    // Add campus markers
     campusLocations.forEach(loc => {
         datasource.add(new atlas.data.Feature(
             new atlas.data.Point(loc.coords),
@@ -35,13 +56,13 @@ map.events.add('ready', function () {
     });
     map.layers.add(symbolLayer);
 
-    // Search and route function
+    // ====== 3️⃣ SEARCH FUNCTION ======
     document.getElementById("findBtn").addEventListener("click", () => {
         let searchValue = document.getElementById("searchBox").value.trim();
         let found = campusLocations.find(l => l.name.toLowerCase() === searchValue.toLowerCase());
 
         if (found) {
-            drawRoute(campusLocations[0].coords, found.coords); // Route from Library
+            drawRoute(campusLocations[0].coords, found.coords); // From Library
         } else {
             alert("Location not found.");
         }
