@@ -1,7 +1,0 @@
-{
-  "name": "campus-navigation",
-  "version": "1.0.0",
-  "scripts": {
-    "docs:build": "echo 'No build needed'"
-  }
-}
