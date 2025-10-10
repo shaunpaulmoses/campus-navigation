@@ -1,18 +1,6 @@
 {
   "name": "campus-navigation",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
-},
-{
-  "name": "static-site",
-  "version": "1.0.0",
   "private": true,
   "scripts": {
     "docs:build": "echo \"No build step needed\""
