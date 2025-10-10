@@ -47,4 +47,4 @@ jobs:
           #### Update these to match your project layout ####
           app_location: "/"                # App source code path — change if under subfolder
           api_location: ""                 # e.g. "api" if using Functions, otherwise leave blank
-          app_artifact_location: "build"   # Where build output lives (React uses "build"; Vue often "dist")
+          app_artifact_location: ""   # Where build output lives (React uses "build"; Vue often "dist")
