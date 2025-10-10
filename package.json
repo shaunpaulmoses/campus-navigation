@@ -9,4 +9,12 @@
   "author": "",
   "license": "ISC",
   "description": ""
+},
+{
+  "name": "static-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "docs:build": "echo \"No build step needed\""
+  }
 }
