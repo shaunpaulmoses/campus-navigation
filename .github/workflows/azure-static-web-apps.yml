@@ -1,0 +1,50 @@
+name: Azure Static Web Apps CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    name: Build and Deploy job (push)
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'   # change if your project needs different Node
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests (optional)
+        run: npm test --if-present
+
+      - name: Build
+        run: npm run build
+
+      # Azure Static Web Apps deploy action
+      - name: 'Deploy to Azure Static Web Apps'
+        id: swa
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # used for PR comments etc.
+          action: "upload"
+          #### Update these to match your project layout ####
+          app_location: "/"                # App source code path — change if under subfolder
+          api_location: ""                 # e.g. "api" if using Functions, otherwise leave blank
+          app_artifact_location: "build"   # Where build output lives (React uses "build"; Vue often "dist")
